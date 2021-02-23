@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SportStore.Models
+using SportStore.Models;
 
 namespace SportStore
 {
@@ -17,6 +17,8 @@ namespace SportStore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //ћожно использовать дл€ миграции с 2.2 до 3.1 версии
+            //services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddMvc();
             services.AddTransient<IProductRepository, FakeProductRepository>();
         }
@@ -32,11 +34,15 @@ namespace SportStore
             app.UseRouting();
             app.UseStatusCodePages();
             app.UseBrowserLink();
-
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");  
+                endpoints.MapControllerRoute(name: "default", pattern: "{controller=Product}/{action=List}/{id?}");
             });
+            //ћожно использовать дл€ миграции с версии 2.2 до 3.1
+            //app.UseMvc(endpoints =>
+            //{
+            //    endpoints.MapRoute(name: "default", template: "{controller=Product}/{action=List}/{id?}");  
+            //});
         }
     }
 }

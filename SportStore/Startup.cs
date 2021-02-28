@@ -43,8 +43,10 @@ namespace SportStore
             app.UseBrowserLink();
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(name: "pagination", pattern: "Products/Page{productPage}", defaults:new { Controller = "Product", action = "List" });
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Product}/{action=List}/{id?}");
             });
+            SeedData.EnsurePopulated(app);
             //ћожно использовать дл€ миграции с версии 2.2 до 3.1
             //app.UseMvc(endpoints =>
             //{

@@ -3,11 +3,18 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" asp-href-include="~/lib/twitter-bootstrap/**/*.min.css" />          
     <title>Спортивный магазин</title>
 </head>
 <body>
-    <div>
-        @RenderBody()
+    <div class="navbar navbar-dark bg-primary" role="navigation">
+        <a class="navbar-brand" href="#">СПОРТИВНЫЙ МАГАЗИН</a>
+    </div>
+    <div class="row m-1 p-1">
+        <div id="categories" class="col-3">ВСТАВИТЬ СЮДА ЧТО_ТО ПОЗЖЕ</div>
+        <div class="col-9">
+            @RenderBody()
+        </div>
     </div>
 </body>
 </html>

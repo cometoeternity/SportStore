@@ -28,6 +28,8 @@ namespace SportStore
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["Data:SportStoreProducts:ConnectionString"]));
             services.AddMvc();
             services.AddTransient<IProductRepository, EFProductRepository>();
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,10 +43,13 @@ namespace SportStore
             app.UseRouting();
             app.UseStatusCodePages();
             app.UseBrowserLink();
+            app.UseSession();
+            
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(name: null, pattern: "{category}/Page{productPage:int}", defaults: new { controller = "Product", action = "List" });
-                endpoints.MapControllerRoute(name: null, pattern: "Page{productPage:int}", defaults:new { Controller = "Product", action = "List", productPage = 1 });
+                endpoints.MapControllerRoute(name: null, pattern: "Page{productPage:int}", defaults: new { Controller = "Product", action = "List", productPage = 1 });
                 endpoints.MapControllerRoute(name: null, pattern: "{category}", defaults: new { Controller = "Product", action = "List", productPage = 1 });
                 endpoints.MapControllerRoute(name: null, pattern: "", defaults: new { Controller = "Product", action = "List", productPage = 1 });
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Product}/{action=List}/{id?}");

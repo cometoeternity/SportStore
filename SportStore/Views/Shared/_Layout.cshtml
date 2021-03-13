@@ -3,13 +3,17 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" asp-href-include="~/lib/twitter-bootstrap/**/*.min.css" />          
+    <link rel="stylesheet" asp-href-include="~/lib/twitter-bootstrap/**/*.min.css" />
+    <link rel="stylesheet" asp-href-include="~/lib/font-awesome/css/*.css" />
     <title>Спортивный магазин</title>
 </head>
 <body>
-    <div class="navbar navbar-dark bg-primary" role="navigation">
-        <a class="navbar-brand" href="#">СПОРТИВНЫЙ МАГАЗИН</a>
-    </div>
+    <div class="navbar navbar-light" style="background-color: #e3f2fd" role="navigation">
+        <div class="navbar-header"><a class="navbar-brand" href="#">СПОРТИВНЫЙ МАГАЗИН</a></div>
+            <div class="nav navbar-nav navbar-right">
+                @await Component.InvokeAsync("CartSummary")
+            </div>
+        </div>
     <div class="row m-1 p-1">
         <div id="categories" class="col-3">@await Component.InvokeAsync("NavigationMenu")</div>
         <div class="col-9">

@@ -21,9 +21,7 @@
                         <form asp-action="RemoveFromCart" method="post">
                             <input type="hidden" name="ProductId" value="@line.Product.ProductId" />
                             <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
-                            <button type ="submit" class="btn btn-sm btn-danger">
-                                Удалить из корзины
-                            </button>
+                            <button type ="submit" class="btn btn-sm btn-danger">Удалить из корзины</button>
                         </form>
                     </td>
                 </tr>

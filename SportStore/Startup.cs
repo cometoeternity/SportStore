@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SportStore.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace SportStore
 {
@@ -26,6 +27,8 @@ namespace SportStore
             //ћожно использовать дл€ миграции с 2.2 до 3.1 версии
             //services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["Data:SportStoreProducts:ConnectionString"]));
+            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["Data:SportStoreIdentity:ConnectionString"]));
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
             services.AddMvc();
             services.AddTransient<IProductRepository, EFProductRepository>();
             services.AddTransient<IOrderRepository, EFOrderRepository>();
@@ -47,8 +50,7 @@ namespace SportStore
             app.UseStatusCodePages();
             app.UseBrowserLink();
             app.UseSession();
-            
-            
+            app.UseAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(name: null, pattern: "{category}/Page{productPage:int}", defaults: new { controller = "Product", action = "List" });
@@ -58,6 +60,7 @@ namespace SportStore
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Product}/{action=List}/{id?}");
             });
             SeedData.EnsurePopulated(app);
+            IdentitySeedData.EnsurePopulated(app);
             //ћожно использовать дл€ миграции с версии 2.2 до 3.1
             //app.UseMvc(endpoints =>
             //{

@@ -44,6 +44,11 @@ namespace SportStore
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseStatusCodePages();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
             }
             app.UseStaticFiles();
             app.UseRouting();
@@ -51,6 +56,7 @@ namespace SportStore
             app.UseBrowserLink();
             app.UseSession();
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(name: null, pattern: "{category}/Page{productPage:int}", defaults: new { controller = "Product", action = "List" });
@@ -59,8 +65,15 @@ namespace SportStore
                 endpoints.MapControllerRoute(name: null, pattern: "", defaults: new { Controller = "Product", action = "List", productPage = 1 });
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Product}/{action=List}/{id?}");
             });
+
+
+            //ÏÐÈ ÏÅÐÅÕÎÄÅ ÍÀ ÏÐÎÈÇÂÎÄÑÒÂÅÍÍÛÅ ÁÄ ÓÁÈÐÀÞÒÑß
             SeedData.EnsurePopulated(app);
             IdentitySeedData.EnsurePopulated(app);
+
+
+
+
             //Ìîæíî èñïîëüçîâàòü äëÿ ìèãðàöèè ñ âåðñèè 2.2 äî 3.1
             //app.UseMvc(endpoints =>
             //{
